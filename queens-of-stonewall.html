@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Miss Simone & The Queens of Stonewall — Strange Body Films</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.typekit.net/qmq4njx.css" />
+  <script>
+    (function() {
+      const t = localStorage.getItem('ce-theme'); if (t) document.documentElement.dataset.theme = t;
+      const l = localStorage.getItem('ce-lang');  if (l) document.documentElement.dataset.lang  = l;
+    })();
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #000; --cream: #EDE9E1; --muted: #6E6A65; --muted2: #4A4744;
+      --rule: rgba(237,233,225,0.10); --rule-mid: rgba(237,233,225,0.22);
+      --nav-h: 60px; --pad-x: clamp(28px, 6vw, 88px);
+      --font-d: 'Cormorant Garamond', Georgia, serif;
+      --font-b: 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--black); color: var(--cream); font-family: var(--font-b); font-weight: 300; font-size: 14px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    html[data-lang="en"] .fr { display: none !important; }
+    html[data-lang="fr"] .en { display: none !important; }
+    #grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.036; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 200px; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--pad-x); border-bottom: 1px solid var(--rule); }
+    .nav-logo { position: relative; text-decoration: none; display: inline-block; }
+    .logo-line { font-family: gunter, sans-serif; font-style: normal; font-weight: 200; font-size: 1.575rem; letter-spacing: 0.04em; color: var(--cream); display: block; line-height: 1.1; user-select: none; }
+    .nav-right { display: flex; align-items: center; gap: clamp(18px, 3vw, 40px); }
+    .nav-links { display: flex; list-style: none; gap: clamp(14px, 2.5vw, 36px); }
+    .nav-links a { font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--cream); }
+    .lang-toggle { display: flex; gap: 2px; }
+    .lang-btn { background: none; border: none; cursor: pointer; font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding: 4px 7px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+    .lang-btn:hover { color: var(--cream); }
+    .lang-btn.active { color: var(--cream); border-bottom-color: var(--cream); }
+    .theme-toggle { display: flex; gap: 2px; margin-right: 4px; }
+    .theme-btn { background: none; border: none; cursor: pointer; font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding: 4px 7px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+    .theme-btn:hover { color: var(--cream); }
+    .theme-btn.active { color: var(--cream); border-bottom-color: var(--cream); }
+
+    .page { display: flex; height: 100vh; padding-top: var(--nav-h); }
+    .film-info { flex: 0 0 46%; padding: clamp(32px, 5vh, 56px) clamp(16px, 3vw, 44px) clamp(32px, 5vh, 56px) var(--pad-x); overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: clamp(20px, 3vh, 32px); }
+    .film-info::-webkit-scrollbar { display: none; }
+    .back-link { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted2); text-decoration: none; transition: color 0.3s; display: inline-block; }
+    .back-link:hover { color: var(--muted); }
+    .film-section-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted2); }
+    .film-title { font-family: var(--font-d); font-style: italic; font-weight: 400; font-size: clamp(1.7rem, 3.8vw, 3rem); line-height: 1.05; color: var(--cream); }
+    .film-meta { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); }
+    .film-meta span + span::before { content: ' · '; }
+    .film-desc { border-top: 1px solid var(--rule); padding-top: clamp(16px, 2.5vh, 28px); }
+    .film-desc p { font-size: clamp(13px, 1.2vw, 15px); line-height: 1.95; color: var(--muted); }
+    .film-desc p + p { margin-top: 1em; }
+    .film-section { border-top: 1px solid var(--rule); padding-top: clamp(14px, 2vh, 22px); }
+    .film-section-title { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted2); margin-bottom: 10px; }
+    .film-section p { font-size: 11px; line-height: 1.9; color: var(--muted); }
+    .film-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .film-link { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream); text-decoration: none; border-bottom: 1px solid rgba(237,233,225,0.3); padding-bottom: 2px; transition: border-color 0.3s, letter-spacing 0.4s var(--ease); }
+    .film-link:hover { letter-spacing: 0.28em; border-color: var(--cream); }
+    .films-image-pane { flex: 1; position: relative; overflow: hidden; }
+    .films-image-pane::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 160px; background: linear-gradient(to right, var(--black), transparent); z-index: 2; pointer-events: none; transition: background 0.45s ease; }
+    .films-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.7s ease; }
+    .films-img.active { opacity: 0.80; }
+    @media (max-width: 720px) { .page { flex-direction: column; } .film-info { flex: none; overflow-y: auto; } .films-image-pane { display: none; } }
+    html[data-theme="light"] { --black: #f8f5f0; --cream: #0d0d0d; --muted: #5a5a5a; --muted2: #999; --rule: rgba(0,0,0,0.10); --rule-mid: rgba(0,0,0,0.22); }
+    html[data-theme="light"] body { background: var(--black); color: var(--cream); }
+    html[data-theme="light"] .film-link { border-color: rgba(0,0,0,0.3); }
+    body, nav, .film-title, .film-desc p, .lang-btn, .nav-links a { transition-property: color, background-color, border-color; transition-duration: 0.45s; transition-timing-function: ease; }
+  </style>
+</head>
+<body>
+<div id="grain"></div>
+<nav>
+  <a class="nav-logo" href="index.html" id="logo-link">
+    <span class="logo-line" id="logo-line-1">Strange</span>
+    <span class="logo-line" id="logo-line-2">Body</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="films.html" class="active"><span class="en">Films</span><span class="fr">Films</span></a></li>
+      <li><a href="about.html"><span class="en">About</span><span class="fr">À&nbsp;propos</span></a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="theme-toggle">
+      <button class="theme-btn" data-theme-val="dark">Dark</button>
+      <button class="theme-btn" data-theme-val="light">Light</button>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="film-info">
+    <a class="back-link" href="films.html">← <span class="en">Films</span><span class="fr">Films</span></a>
+
+    <div class="film-section-label">Films</div>
+
+    <h1 class="film-title">Miss Simone &amp; The Queens of Stonewall</h1>
+
+    <div class="film-meta">
+      <span class="en">Documentary</span><span class="fr">Documentaire</span>
+      <span>20min</span>
+      <span>Strange Body Films</span>
+      <span>TBD</span>
+    </div>
+
+    <div class="film-desc">
+      <p class="en">A portrait of Miss Simone of the West Village — legendary transgender performer, astrologer, and community advocate — and the tight-knit circle of LGBTQ+ survivors, performers, and elders who surround her. Spanning decades of adversity and resilience, the film traces lives lived through the AIDS epidemic, enduring transphobia, and the upheaval of COVID-19.</p>
+      <p class="en">When the pandemic shutters the city, Simone begins hosting outdoor drag performances at the Stonewall National Monument — Sunday Tea Dances that become a celebrated neighborhood fixture, even as authorities attempt to silence them. A film about survival, self-expression, and the stubborn pursuit of beauty.</p>
+      <p class="fr">Portrait de Miss Simone du West Village — performeuse transgenre légendaire, astrologue et militante communautaire — et du cercle soudé de survivants, performeurs et anciens LGBTQ+ qui l'entourent. Couvrant des décennies d'adversité et de résilience, le film retrace des vies traversées par l'épidémie du SIDA, la transphobie persistante et les bouleversements du COVID-19.</p>
+      <p class="fr">Quand la pandémie paralyse la ville, Simone commence à organiser des performances de drag en plein air au Monument national de Stonewall — des Sunday Tea Dances qui deviennent un rendez-vous célébré dans le quartier, malgré les tentatives de les faire taire. Un film sur la survie, l'expression de soi et la poursuite obstinée de la beauté.</p>
+    </div>
+
+    <div class="film-section">
+      <div class="film-section-title en">Team</div>
+      <div class="film-section-title fr">Équipe</div>
+      <p>
+        Jean Sonderand — Director<br>
+        Nick Tyson — Director<br>
+        Steven Love Menendez — Producer
+      </p>
+    </div>
+
+    <div class="film-section">
+      <div class="film-section-title en">Links</div>
+      <div class="film-section-title fr">Liens</div>
+      <div class="film-links">
+        <a class="film-link" href="https://vimeo.com/951668188" target="_blank" rel="noopener">Trailer ↗</a>
+        <a class="film-link" href="https://queensofstonewall.com" target="_blank" rel="noopener">queensofstonewall.com ↗</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="films-image-pane">
+    <img class="films-img" id="films-img-a" src="" alt="">
+    <img class="films-img" id="films-img-b" src="" alt="">
+  </div>
+</div>
+
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  localStorage.setItem('ce-lang', lang);
+}
+setLang(localStorage.getItem('ce-lang') || 'en');
+
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem('ce-theme', t);
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.themeVal === t));
+}
+setTheme(localStorage.getItem('ce-theme') || 'dark');
+document.querySelectorAll('.theme-btn').forEach(btn => {
+  btn.addEventListener('click', () => setTheme(btn.dataset.themeVal));
+});
+(function() {
+  const line1 = document.getElementById('logo-line-1');
+  const line2 = document.getElementById('logo-line-2');
+  if (!line1 || !line2) return;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&*àéèêç';
+  let timers = [];
+  function scrambleTo(el, target, delay, duration) {
+    const frames = 18, step = duration / frames;
+    let frame = 0;
+    const tid = setTimeout(() => {
+      const iv = setInterval(() => {
+        frame++;
+        const done = Math.floor((frame / frames) * target.length);
+        let out = target.slice(0, done);
+        for (let i = done; i < target.length; i++) out += target[i] === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)];
+        el.textContent = out;
+        if (frame >= frames) { el.textContent = target; clearInterval(iv); }
+      }, step);
+      timers.push(iv);
+    }, delay);
+    timers.push(tid);
+  }
+  function clearTimers() { timers.forEach(t => { clearInterval(t); clearTimeout(t); }); timers = []; }
+  const logo = document.getElementById('logo-link');
+  if (!logo) return;
+  logo.addEventListener('mouseenter', () => { clearTimers(); scrambleTo(line1, 'Corps', 0, 320); scrambleTo(line2, 'Étrange', 60, 380); });
+  logo.addEventListener('mouseleave', () => { clearTimers(); scrambleTo(line1, 'Strange', 0, 260); scrambleTo(line2, 'Body', 40, 220); });
+})();
+
+(function() {
+  const imgA = document.getElementById('films-img-a');
+  const imgB = document.getElementById('films-img-b');
+  const imgs = ['images/queens-stonewall-1.jpg', 'images/queens-stonewall-2.jpg'];
+  let slot = 'a', idx = 0;
+  imgs.forEach(src => { const i = new Image(); i.src = src; });
+  function swap(src) {
+    if (slot === 'a') { imgB.src = src; imgB.classList.add('active'); imgA.classList.remove('active'); slot = 'b'; }
+    else              { imgA.src = src; imgA.classList.add('active'); imgB.classList.remove('active'); slot = 'a'; }
+  }
+  swap(imgs[0]);
+  setInterval(() => { idx = (idx + 1) % imgs.length; swap(imgs[idx]); }, 3200);
+})();
+</script>
+</body>
+</html>

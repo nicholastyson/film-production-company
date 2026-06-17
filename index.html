@@ -8,333 +8,120 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://use.typekit.net/qmq4njx.css" />
+  <script>
+    (function() {
+      const t = localStorage.getItem('ce-theme'); if (t) document.documentElement.dataset.theme = t;
+      const l = localStorage.getItem('ce-lang');  if (l) document.documentElement.dataset.lang  = l;
+    })();
+  </script>
   <style>
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --black:    #000;
-      --cream:    #EDE9E1;
-      --muted:    #6E6A65;
-      --muted2:   #4A4744;
-      --rule:     rgba(237,233,225,0.10);
-      --rule-mid: rgba(237,233,225,0.22);
-      --nav-h:    60px;
-      --pad-x:    clamp(28px, 6vw, 88px);
-      --font-d:   'Cormorant Garamond', Georgia, serif;
-      --font-b:   'Inter', system-ui, sans-serif;
-      --ease:     cubic-bezier(0.16, 1, 0.3, 1);
+      --black: #000; --cream: #EDE9E1; --muted: #6E6A65; --muted2: #4A4744;
+      --rule: rgba(237,233,225,0.10); --rule-mid: rgba(237,233,225,0.18);
+      --nav-h: 60px; --pad-x: clamp(28px, 6vw, 88px);
+      --font-d: 'Cormorant Garamond', Georgia, serif;
+      --font-b: 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     html, body {
-      width: 100%; height: 100%;
-      overflow: hidden;
-      background: var(--black);
-      color: var(--cream);
-      font-family: var(--font-b);
-      font-weight: 300;
-      font-size: 14px;
-      line-height: 1.7;
+      width: 100%; height: 100%; overflow: hidden;
+      background: var(--black); color: var(--cream);
+      font-family: var(--font-b); font-weight: 300; font-size: 14px;
       -webkit-font-smoothing: antialiased;
     }
-
-    /* ── Language ─────────────────────────────────────── */
     html[data-lang="en"] .fr { display: none !important; }
     html[data-lang="fr"] .en { display: none !important; }
 
-    /* ── Grain ────────────────────────────────────────── */
+    /* ── Grain ─────────────────────────────────────────── */
     #grain {
-      position: fixed; inset: 0; z-index: 9999;
-      pointer-events: none; opacity: 0.036;
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.036;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 200px;
     }
 
-    /* ── Nav ──────────────────────────────────────────── */
+    /* ── Nav ───────────────────────────────────────────── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 200; height: var(--nav-h);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 var(--pad-x);
-      border-bottom: 1px solid var(--rule);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: var(--nav-h); display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--pad-x); border-bottom: 1px solid var(--rule);
     }
-
-    .nav-logo {
-      position: relative; text-decoration: none;
-      cursor: pointer; display: inline-block;
-    }
-    .logo-text, .logo-alt {
-      font-family: gunter, sans-serif;
-      font-style: normal; font-weight: 200;
-      font-size: 1.575rem; letter-spacing: 0.04em;
-      color: var(--cream); display: block; line-height: 1.1;
-      transition: opacity 0.35s ease; user-select: none;
-    }
-    .logo-alt {
-      position: absolute; top: 0; left: 0;
-      opacity: 0; pointer-events: none;
-    }
-    .nav-logo:hover .logo-text { opacity: 0; }
-    .nav-logo:hover .logo-alt  { opacity: 1; }
-
+    .nav-logo { position: relative; text-decoration: none; display: inline-block; }
+    .logo-line { font-family: gunter, sans-serif; font-style: normal; font-weight: 200; font-size: 1.575rem; letter-spacing: 0.04em; color: var(--cream); display: block; line-height: 1.1; user-select: none; }
     .nav-right { display: flex; align-items: center; gap: clamp(18px, 3vw, 40px); }
     .nav-links { display: flex; list-style: none; gap: clamp(14px, 2.5vw, 36px); }
-    .nav-links button {
-      background: none; border: none; cursor: pointer;
-      font-family: var(--font-b); font-size: 10px; font-weight: 300;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--muted); padding: 0; transition: color 0.3s;
-    }
-    .nav-links button:hover,
-    .nav-links button.active { color: var(--cream); }
-
+    .nav-links a { font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--cream); }
     .lang-toggle { display: flex; gap: 2px; }
-    .lang-btn {
-      background: none; border: none; cursor: pointer;
-      font-family: var(--font-b); font-size: 10px; font-weight: 300;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--muted); padding: 4px 7px;
-      border-bottom: 1px solid transparent;
-      transition: color 0.3s, border-color 0.3s;
-    }
+    .lang-btn { background: none; border: none; cursor: pointer; font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding: 4px 7px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
     .lang-btn:hover { color: var(--cream); }
     .lang-btn.active { color: var(--cream); border-bottom-color: var(--cream); }
+    .theme-toggle { display: flex; gap: 2px; margin-right: 4px; }
+    .theme-btn { background: none; border: none; cursor: pointer; font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding: 4px 7px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+    .theme-btn:hover { color: var(--cream); }
+    .theme-btn.active { color: var(--cream); border-bottom-color: var(--cream); }
 
-    /* ── Panel system ─────────────────────────────────── */
-    .panel {
-      position: fixed; inset: 0;
-      padding-top: var(--nav-h);
-      display: flex; flex-direction: column;
-      pointer-events: none; opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+    /* ── Windows ───────────────────────────────────────── */
+    .win {
+      position: fixed;
+      border: 1px solid var(--rule-mid);
+      background: #060606;
+      user-select: none;
+      cursor: grab;
+      transition: box-shadow 0.2s ease;
     }
-    .panel.active  { opacity: 1; transform: translateY(0); pointer-events: all; }
-    .panel.exit    { opacity: 0; transform: translateY(-14px); pointer-events: none; }
+    .win:active,
+    .win.dragging { cursor: grabbing; box-shadow: 0 12px 48px rgba(0,0,0,0.7); }
+    .win:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
 
-    /* ── Dot nav ──────────────────────────────────────── */
-    #dots {
-      position: fixed; right: 22px; top: 50%;
-      transform: translateY(-50%); z-index: 200;
-      display: flex; flex-direction: column; gap: 10px;
+    /* Video / placeholder area */
+    .win-body {
+      position: relative; overflow: hidden;
+      background: #030303;
+      display: flex; align-items: center; justify-content: center;
     }
-    .dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--muted2); cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-      border: none; padding: 0;
-    }
-    .dot.active { background: var(--cream); transform: scale(1.3); }
-    .dot:hover  { background: var(--muted); }
-
-    /* ── Hero ─────────────────────────────────────────── */
-    #panel-hero {
-      align-items: center; justify-content: flex-end;
-      padding-bottom: 40px;
+    .win-body video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
 
-    .hero-hint {
-      font-size: 9px; letter-spacing: 0.26em;
-      text-transform: uppercase; color: var(--muted2);
-      cursor: pointer; z-index: 10;
-      transition: color 0.3s, letter-spacing 0.4s;
-      border: none; background: none;
-      font-family: var(--font-b); font-weight: 300;
-    }
-    .hero-hint:hover { color: var(--muted); letter-spacing: 0.36em; }
 
-    /* ── Shared panel inner ───────────────────────────── */
-    .panel-inner {
-      flex: 1;
-      padding: clamp(32px, 5vh, 56px) var(--pad-x) clamp(20px, 4vh, 40px);
-      display: flex; flex-direction: column;
-      overflow: hidden;
+    /* ── Enter hint ────────────────────────────────────── */
+    #enter {
+      position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+      z-index: 400;
+      font-size: 9px; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--muted2); text-decoration: none;
+      transition: color 0.3s, letter-spacing 0.4s var(--ease);
     }
+    #enter:hover { color: var(--muted); letter-spacing: 0.36em; }
 
-    /* ── Films ────────────────────────────────────────── */
-    #panel-films { flex-direction: row; }
-
-    .films-list {
-      flex: 0 0 46%;
-      padding: clamp(32px, 5vh, 56px) clamp(16px, 3vw, 44px) clamp(20px, 4vh, 40px) var(--pad-x);
-      display: flex; flex-direction: column; justify-content: center;
-      position: relative; z-index: 1;
-    }
-
-    /* Right: image viewport */
-    .films-image-pane {
-      flex: 1; position: relative; overflow: hidden;
-    }
-    .films-image-pane::before {
-      content: ''; position: absolute;
-      left: 0; top: 0; bottom: 0; width: 160px;
-      background: linear-gradient(to right, #000, transparent);
-      z-index: 2; pointer-events: none;
-    }
-    .films-img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%; object-fit: cover;
-      opacity: 0; transition: opacity 0.7s ease;
-    }
-    .films-img.active { opacity: 0.80; }
-
-    /* Sections */
-    .films-section { flex-shrink: 0; }
-    .films-section + .films-section { margin-top: clamp(20px, 3.5vh, 36px); }
-
-    .films-sublabel {
-      display: flex; align-items: center; gap: 16px;
-      margin-bottom: clamp(8px, 1.4vh, 14px);
-    }
-    .films-sublabel span {
-      font-size: 9px; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--muted2);
-      white-space: nowrap; flex-shrink: 0;
-    }
-    .films-sublabel::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
-
-    /* Film rows */
-    .film-row {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 0 clamp(12px, 2.5vw, 32px);
-      align-items: baseline;
-      padding: clamp(9px, 1.4vh, 16px) 0;
-      border-bottom: 1px solid var(--rule);
-      cursor: default; position: relative;
-    }
-    .film-row:first-child { border-top: 1px solid var(--rule); }
-
-    .film-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-    .film-t {
-      font-family: var(--font-d); font-style: italic; font-weight: 400;
-      font-size: clamp(1.0rem, 1.8vw, 1.45rem);
-      color: var(--cream); line-height: 1.2;
-      transition: letter-spacing 0.4s var(--ease);
-    }
-    .film-row:hover .film-t { letter-spacing: 0.01em; }
-
-    .film-desc-inline {
-      font-size: 11px; color: var(--muted); line-height: 1.6;
-      max-width: 400px; max-height: 0; overflow: hidden; opacity: 0;
-      transition: max-height 0.45s var(--ease), opacity 0.4s ease, margin-top 0.3s ease;
-    }
-    .film-row:hover .film-desc-inline { max-height: 72px; opacity: 1; margin-top: 4px; }
-
-    .film-type-col {
-      font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--muted2); white-space: nowrap; align-self: center;
-    }
-    .film-year-col {
-      font-size: 10px; letter-spacing: 0.12em; color: var(--muted2);
-      white-space: nowrap; align-self: center; min-width: 36px; text-align: right;
-    }
-
-    @media (max-width: 720px) {
-      #panel-films { flex-direction: column; }
-      .films-list { flex: none; padding-right: var(--pad-x); }
-      .films-image-pane { display: none; }
-      .film-row { grid-template-columns: 1fr auto; }
-      .film-type-col { display: none; }
-    }
-
-    /* ── About ────────────────────────────────────────── */
-    #panel-about .panel-inner { justify-content: center; }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: clamp(32px, 7vw, 96px); align-items: start;
-    }
-    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
-    .about-text p {
-      font-size: clamp(13px, 1.3vw, 15px);
-      line-height: 1.9; color: var(--muted); margin-bottom: 1.3em;
-    }
-    .about-text p:last-child { margin-bottom: 0; }
-    .about-aside { display: flex; flex-direction: column; gap: clamp(24px, 3vh, 36px); }
-    .pull-quote {
-      font-family: var(--font-d); font-style: italic; font-weight: 300;
-      font-size: clamp(1.05rem, 2.2vw, 1.5rem); line-height: 1.55;
-      color: var(--cream); padding-left: 20px;
-      border-left: 1px solid var(--rule-mid);
-    }
-    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
-    .tag {
-      font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--muted); border: 1px solid rgba(237,233,225,0.15); padding: 5px 10px;
-    }
-
-    /* ── Contact ──────────────────────────────────────── */
-    #panel-contact { align-items: center; justify-content: center; text-align: center; }
-    #panel-contact .panel-inner {
-      align-items: center; justify-content: center;
-      max-width: 500px; margin: 0 auto; width: 100%;
-    }
-    .contact-intro {
-      font-size: 13px; line-height: 1.9; color: var(--muted);
-      margin-bottom: 40px; max-width: 400px;
-    }
-    .contact-email {
-      font-family: var(--font-d); font-style: italic;
-      font-size: clamp(1.3rem, 3vw, 2rem);
-      color: var(--cream); text-decoration: none;
-      display: block; margin-bottom: 40px;
-      transition: letter-spacing 0.45s var(--ease);
-    }
-    .contact-email:hover { letter-spacing: 0.05em; }
-    .contact-socials { display: flex; gap: 28px; justify-content: center; }
-    .contact-socials a {
-      font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; transition: color 0.3s;
-    }
-    .contact-socials a:hover { color: var(--cream); }
-    .contact-footer {
-      position: absolute; bottom: 28px;
-      font-size: 10px; letter-spacing: 0.14em; color: var(--muted2);
-    }
-
-    /* ── Light / English theme ─────────────────────────── */
-    html[data-theme="light"] {
-      --black:    #f8f5f0;
-      --cream:    #0d0d0d;
-      --muted:    #5a5a5a;
-      --muted2:   #999;
-      --rule:     rgba(0,0,0,0.10);
-      --rule-mid: rgba(0,0,0,0.22);
-    }
-    html[data-theme="light"] body { background: var(--black); color: var(--cream); }
-
-    /* Swap logo: Strange Body by default, hover reveals Corps Étrange */
-    html[data-theme="light"] .logo-text { opacity: 0; }
-    html[data-theme="light"] .logo-alt  { opacity: 1; }
-    html[data-theme="light"] .nav-logo:hover .logo-text { opacity: 1; }
-    html[data-theme="light"] .nav-logo:hover .logo-alt  { opacity: 0; }
-
-    /* Smooth theme transition */
-    body, nav, .film-t, .films-sublabel span, .hero-hint,
-    .dot, .nav-links button, .lang-btn, .about-text p,
-    .pull-quote, .tag, .contact-label, .contact-val {
-      transition-property: color, background-color, border-color, opacity;
-      transition-duration: 0.45s;
-      transition-timing-function: ease;
-    }
-
+    /* ── Light theme ───────────────────────────────────── */
+    html[data-theme="light"] { --black: #f8f5f0; --cream: #0d0d0d; --muted: #5a5a5a; --muted2: #999; --rule: rgba(0,0,0,0.10); --rule-mid: rgba(0,0,0,0.18); }
+    html[data-theme="light"] body { background: var(--black); }
+    html[data-theme="light"] .win { background: #fefcfa; border-color: rgba(0,0,0,0.15); }
+    html[data-theme="light"] .win-bar { background: rgba(0,0,0,0.03); }
+    html[data-theme="light"] .win-body { background: #f0ede8; }
+    body, nav, .lang-btn, .nav-links a, .win-title { transition-property: color, background-color, border-color; transition-duration: 0.45s; transition-timing-function: ease; }
   </style>
 </head>
 <body>
 <div id="grain"></div>
 
-<!-- ══ Nav ═════════════════════════════════════════════════ -->
 <nav>
-  <a class="nav-logo" id="logo-toggle">
-    <span class="logo-text">Corps<br>Étrange</span>
-    <span class="logo-alt">Strange<br>Body</span>
+  <a class="nav-logo" href="index.html" id="logo-link">
+    <span class="logo-line" id="logo-line-1">Strange</span>
+    <span class="logo-line" id="logo-line-2">Body</span>
   </a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><button onclick="goTo(1)" data-panel="1"><span class="en">Films</span><span class="fr">Films</span></button></li>
-      <li><button onclick="goTo(2)" data-panel="2"><span class="en">About</span><span class="fr">À&nbsp;propos</span></button></li>
-      <li><button onclick="goTo(3)" data-panel="3">Contact</button></li>
+      <li><a href="films.html"><span class="en">Films</span><span class="fr">Films</span></a></li>
+      <li><a href="about.html"><span class="en">About</span><span class="fr">À&nbsp;propos</span></a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
+    <div class="theme-toggle">
+      <button class="theme-btn" data-theme-val="dark">Dark</button>
+      <button class="theme-btn" data-theme-val="light">Light</button>
+    </div>
     <div class="lang-toggle">
       <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
       <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
@@ -342,244 +129,161 @@
   </div>
 </nav>
 
-
-<!-- ══════════════════════════════════════════════════════════
-     PANEL 0 — HERO
-═══════════════════════════════════════════════════════════ -->
-<div class="panel active" id="panel-hero">
-  <button class="hero-hint" onclick="goTo(1)">
-    <span class="en">Enter</span>
-    <span class="fr">Entrer</span>
-  </button>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════
-     PANEL 1 — FILMS
-═══════════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-films">
-
-  <!-- Left: film list -->
-  <div class="films-list">
-
-    <!-- In Development -->
-    <div class="films-section">
-      <div class="films-sublabel">
-        <span class="en">In Development</span>
-        <span class="fr">En développement</span>
-      </div>
-      <div class="film-row" data-imgs="images/body-language-1.jpg,images/body-language-2.jpg">
-        <div class="film-main">
-          <span class="film-t">Body Language</span>
-          <span class="film-desc-inline en">A meta-documentary about the life and afterlife of Linus Herrell — a gay Clevelander who helped awaken his city to the AIDS crisis, died in 1990 at 38, and whose ashes were recently rediscovered at a BDSM retreat in rural Pennsylvania.</span>
-          <span class="film-desc-inline fr">Un méta-documentaire sur la vie et l'au-delà de Linus Herrell — un gay de Cleveland mort du SIDA en 1990 à 38 ans, dont les cendres ont été récemment retrouvées dans une retraite BDSM en Pennsylvanie rurale.</span>
-        </div>
-        <span class="film-type-col en">Documentary</span>
-        <span class="film-type-col fr">Documentaire</span>
-        <span class="film-year-col">TBD</span>
-      </div>
-    </div>
-
-    <!-- Films -->
-    <div class="films-section">
-      <div class="films-sublabel">
-        <span>Films</span>
-      </div>
-      <div class="film-row" data-imgs="images/bound-gagged-1.jpg,images/bound-gagged-2.jpg">
-        <div class="film-main">
-          <span class="film-t">Mr. Bound &amp; Gagged</span>
-          <span class="film-desc-inline en">Bob Wingate and Lee Clauss, former publishers of the legendary Bound &amp; Gagged magazine, open the archive and the floodgates in this richly layered excavation of queer kink, media history, and erotic resistance. Set against the Leather Archives &amp; Museum in Chicago. (CUFF 32)</span>
-          <span class="film-desc-inline fr">Bob Wingate et Lee Clauss, anciens éditeurs du légendaire magazine Bound &amp; Gagged, ouvrent les archives dans cette excavation de l'histoire du kink queer, des médias et de la résistance érotique. (CUFF 32)</span>
-        </div>
-        <span class="film-type-col en">Documentary · 35min</span>
-        <span class="film-type-col fr">Documentaire · 35min</span>
-        <span class="film-year-col">2025</span>
-      </div>
-
-      <div class="film-row" data-imgs="images/tracing-utopia-1.jpg,images/tracing-utopia-2.jpg,images/tracing-utopia-3.jpg">
-        <div class="film-main">
-          <span class="film-t">Tracing Utopia</span>
-          <span class="film-desc-inline en">An odyssey into the dreams of queer teens in New York City as they envision a better world. A collaborative manifesto of queer community transcending time. Best International Narrative Short, Kashish. (IFFR · BFI Flare · Oberhausen · 50+ festivals)</span>
-          <span class="film-desc-inline fr">Une odyssée dans les rêves de jeunes queers à New York qui imaginent un monde meilleur. Un manifeste collaboratif sur la communauté queer qui transcende le temps. Meilleur court métrage, Kashish. (IFFR · BFI Flare · Oberhausen)</span>
-        </div>
-        <span class="film-type-col en">Documentary · 27min</span>
-        <span class="film-type-col fr">Documentaire · 27min</span>
-        <span class="film-year-col">2021</span>
-      </div>
-    </div>
-
-  </div><!-- /films-list -->
-
-  <!-- Right: image pane (crossfades on hover) -->
-  <div class="films-image-pane">
-    <img class="films-img" id="films-img-a" src="" alt="">
-    <img class="films-img" id="films-img-b" src="" alt="">
-  </div>
-
-</div>
-
-<!-- ══════════════════════════════════════════════════════════
-     PANEL 2 — ABOUT
-═══════════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-about">
-  <div class="panel-inner">
-    <div class="about-grid">
-      <div class="about-text">
-        <p class="en">Strange Body Films is a Paris-based production company working at the intersection of documentary rigor and experimental form. We make films that are unclassifiable by design — work that belongs equally to the cinema, the gallery, and the archive.</p>
-        <p class="fr">Strange Body Films est une société de production parisienne qui travaille à l'intersection de la rigueur documentaire et de la forme expérimentale. Nous faisons des films inclassables par essence — des œuvres qui appartiennent à la fois au cinéma, à la galerie et aux archives.</p>
-        <p class="en">We are drawn to bodies in transformation: bodies of water, of data, of desire, of evidence. Our films have screened at Rotterdam, DOK Leipzig, Queer Lisboa, and across the festival circuit. We develop long-form series, essays, and installations.</p>
-        <p class="fr">Nous sommes attirés par les corps en transformation : corps d'eau, de données, de désir, de preuves. Nos films ont été présentés à Rotterdam, DOK Leipzig, Queer Lisboa. Nous développons aussi des séries longues, essais et installations.</p>
-        <p class="en">Corps Étrange — strange body — is the organizing idea: the body that doesn't fit, that refuses categorization, that generates its own frequency.</p>
-        <p class="fr">Corps Étrange est l'idée centrale : le corps qui ne rentre pas dans les cases, qui refuse la catégorisation, qui génère sa propre fréquence.</p>
-      </div>
-      <div class="about-aside">
-        <blockquote class="pull-quote en">"The body that doesn't fit, that refuses categorization, that generates its own frequency."</blockquote>
-        <blockquote class="pull-quote fr">« Le corps qui ne rentre pas dans les cases, qui refuse la catégorisation, qui génère sa propre fréquence. »</blockquote>
-        <div class="tags">
-          <span class="tag en">Documentary</span><span class="tag fr">Documentaire</span>
-          <span class="tag en">Queer Cinema</span><span class="tag fr">Cinéma queer</span>
-          <span class="tag en">Experimental</span><span class="tag fr">Expérimental</span>
-          <span class="tag en">Essay Film</span><span class="tag fr">Film-essai</span>
-          <span class="tag">CNC · ARTE France</span>
-          <span class="tag">IFFR · DOK Leipzig</span>
-        </div>
-      </div>
-    </div>
+<div class="win" id="win1" style="left:7%; top:14%; z-index:10;">
+  <div class="win-body" style="width:480px; height:360px;">
+    <video autoplay loop muted playsinline><source src="videos/corps-etrange-1.mp4" type="video/mp4"></video>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     PANEL 3 — CONTACT
-═══════════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-contact">
-  <div class="panel-inner">
-    <p class="contact-intro en">For festival programming, co-production, press, and collaboration — we'd love to hear from you.</p>
-    <p class="contact-intro fr">Pour la programmation en festival, la coproduction, la presse et les collaborations — nous sommes à votre écoute.</p>
-    <a href="mailto:contact@strangebodyfilms.com" class="contact-email">contact@strangebodyfilms.com</a>
-    <div class="contact-socials">
-      <a href="#">Instagram</a>
-      <a href="#">Vimeo</a>
-      <a href="#">Letterboxd</a>
-    </div>
-    <p class="contact-footer">Strange Body Films / Corps Étrange &nbsp;·&nbsp; Paris, France &nbsp;·&nbsp; © 2026</p>
+<div class="win" id="win2" style="left:52%; top:9%; z-index:11;">
+  <div class="win-body" style="width:380px; height:285px;">
+    <video autoplay loop muted playsinline><source src="videos/corps-etrange-10.mp4" type="video/mp4"></video>
   </div>
 </div>
 
+<div class="win" id="win3" style="left:34%; top:48%; z-index:12;">
+  <div class="win-body" style="width:340px; height:255px;">
+    <video autoplay loop muted playsinline><source src="videos/corps-etrange-3.mp4" type="video/mp4"></video>
+  </div>
+</div>
 
-<!-- ══ Scripts ═════════════════════════════════════════════ -->
+<div class="win" id="win4" style="left:66%; top:52%; z-index:13;">
+  <div class="win-body" style="width:400px; height:300px;">
+    <video autoplay loop muted playsinline><source src="videos/corps-etrange-11.mp4" type="video/mp4"></video>
+  </div>
+</div>
+
+<div class="win" id="win5" style="left:5%; top:60%; z-index:14;">
+  <div class="win-body" style="width:300px; height:225px;">
+    <video autoplay loop muted playsinline><source src="videos/corps-etrange-5.mp4" type="video/mp4"></video>
+  </div>
+</div>
+
+<div class="win" id="win6" style="left:71%; top:24%; z-index:15;">
+  <div class="win-body" style="width:360px; height:270px;">
+    <video autoplay loop muted playsinline><source src="videos/corps-etrange-6.mp4" type="video/mp4"></video>
+  </div>
+</div>
+
+<div class="win" id="win7" style="left:20%; top:68%; z-index:16;">
+  <div class="win-body" style="width:300px; height:225px;">
+    <video autoplay loop muted playsinline><source src="videos/corps-etrange-7.mp4" type="video/mp4"></video>
+  </div>
+</div>
+
+<div class="win" id="win8" style="left:54%; top:70%; z-index:17;">
+  <div class="win-body" style="width:380px; height:285px;">
+    <video autoplay loop muted playsinline><source src="videos/corps-etrange-8.mp4" type="video/mp4"></video>
+  </div>
+</div>
+
+<div class="win" id="win9" style="left:20%; top:10%; z-index:18;">
+  <div class="win-body" style="width:340px; height:255px;">
+    <video autoplay loop muted playsinline><source src="videos/corps-etrange-9.mp4" type="video/mp4"></video>
+  </div>
+</div>
+
+<a id="enter" href="films.html">
+  <span class="en">Enter</span>
+  <span class="fr">Entrer</span>
+</a>
+
 <script>
-// ── Panel navigation ──────────────────────────────────────
-const panels  = Array.from(document.querySelectorAll('.panel'));
-const dots    = Array.from(document.querySelectorAll('.dot'));
-const navBtns = Array.from(document.querySelectorAll('.nav-links button'));
-let current = 0, animating = false;
-
-function goTo(idx) {
-  if (idx === current || animating) return;
-  animating = true;
-  const prev = panels[current], next = panels[idx];
-  prev.classList.add('exit');
-  prev.classList.remove('active');
-  setTimeout(() => {
-    prev.classList.remove('exit');
-    next.classList.add('active');
-    current = idx;
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
-    navBtns.forEach((b, i) => b.classList.toggle('active', i + 1 === current));
-    setTimeout(() => { animating = false; }, 700);
-  }, 80);
-}
-
-// Keyboard
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') goTo(Math.min(current + 1, panels.length - 1));
-  if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  goTo(Math.max(current - 1, 0));
-});
-
-// Wheel
-let wTimer = null;
-document.addEventListener('wheel', e => {
-  if (wTimer) return;
-  if      (e.deltaY >  30) goTo(Math.min(current + 1, panels.length - 1));
-  else if (e.deltaY < -30) goTo(Math.max(current - 1, 0));
-  wTimer = setTimeout(() => { wTimer = null; }, 900);
-}, { passive: true });
-
-// Touch
-let tY = null;
-document.addEventListener('touchstart', e => { tY = e.touches[0].clientY; }, { passive: true });
-document.addEventListener('touchend', e => {
-  if (tY === null) return;
-  const dy = tY - e.changedTouches[0].clientY;
-  if (Math.abs(dy) > 50) goTo(dy > 0 ? Math.min(current + 1, panels.length - 1) : Math.max(current - 1, 0));
-  tY = null;
-});
-
 // ── Language ──────────────────────────────────────────────
 function setLang(lang) {
   document.documentElement.setAttribute('data-lang', lang);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  localStorage.setItem('ce-lang', lang);
 }
-setLang('en');
+setLang(localStorage.getItem('ce-lang') || 'en');
 
-// ── Theme toggle via logo ─────────────────────────────────
+// ── Theme toggle ──────────────────────────────────────────
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem('ce-theme', t);
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.themeVal === t));
+}
+setTheme(localStorage.getItem('ce-theme') || 'dark');
+document.querySelectorAll('.theme-btn').forEach(btn => {
+  btn.addEventListener('click', () => setTheme(btn.dataset.themeVal));
+});
 (function() {
-  const logo = document.getElementById('logo-toggle');
-  const html = document.documentElement;
-  logo.addEventListener('click', () => {
-    html.dataset.theme = html.dataset.theme === 'light' ? 'dark' : 'light';
-  });
+  const line1 = document.getElementById('logo-line-1');
+  const line2 = document.getElementById('logo-line-2');
+  if (!line1 || !line2) return;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&*àéèêç';
+  let timers = [];
+  function scrambleTo(el, target, delay, duration) {
+    const frames = 18, step = duration / frames;
+    let frame = 0;
+    const tid = setTimeout(() => {
+      const iv = setInterval(() => {
+        frame++;
+        const done = Math.floor((frame / frames) * target.length);
+        let out = target.slice(0, done);
+        for (let i = done; i < target.length; i++) out += target[i] === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)];
+        el.textContent = out;
+        if (frame >= frames) { el.textContent = target; clearInterval(iv); }
+      }, step);
+      timers.push(iv);
+    }, delay);
+    timers.push(tid);
+  }
+  function clearTimers() { timers.forEach(t => { clearInterval(t); clearTimeout(t); }); timers = []; }
+  const logo = document.getElementById('logo-link');
+  if (!logo) return;
+  logo.addEventListener('mouseenter', () => { clearTimers(); scrambleTo(line1, 'Corps', 0, 320); scrambleTo(line2, 'Étrange', 60, 380); });
+  logo.addEventListener('mouseleave', () => { clearTimers(); scrambleTo(line1, 'Strange', 0, 260); scrambleTo(line2, 'Body', 40, 220); });
 })();
 
-// ── Film still crossfade ───────────────────────────────────
-(function() {
-  const imgA = document.getElementById('films-img-a');
-  const imgB = document.getElementById('films-img-b');
-  if (!imgA || !imgB) return;
+// ── Draggable windows ─────────────────────────────────────
+let topZ = 20;
 
-  let slot = 'a';       // which img element is currently showing
-  let cycleTimer = null;
+document.querySelectorAll('.win').forEach(win => {
+  let dragging = false, ox = 0, oy = 0;
 
-  function swap(src) {
-    if (slot === 'a') {
-      imgB.src = src;
-      imgB.classList.add('active');
-      imgA.classList.remove('active');
-      slot = 'b';
-    } else {
-      imgA.src = src;
-      imgA.classList.add('active');
-      imgB.classList.remove('active');
-      slot = 'a';
-    }
-  }
-
-  function startCycle(imgs) {
-    // Pre-load both images; show first immediately
-    imgs.forEach(src => { const i = new Image(); i.src = src; });
-    let idx = 0;
-    swap(imgs[0]);
-    if (imgs.length > 1) {
-      cycleTimer = setInterval(() => {
-        idx = (idx + 1) % imgs.length;
-        swap(imgs[idx]);
-      }, 3200);
-    }
-  }
-
-  function stopCycle() {
-    clearInterval(cycleTimer);
-    cycleTimer = null;
-    imgA.classList.remove('active');
-    imgB.classList.remove('active');
-  }
-
-  document.querySelectorAll('.film-row[data-imgs]').forEach(row => {
-    const imgs = row.dataset.imgs.split(',').map(s => s.trim());
-    row.addEventListener('mouseenter', () => startCycle(imgs));
-    row.addEventListener('mouseleave', stopCycle);
+  // Mouse drag from anywhere on the window
+  win.addEventListener('mousedown', e => {
+    dragging = true;
+    win.style.zIndex = ++topZ;
+    win.classList.add('dragging');
+    ox = e.clientX - win.getBoundingClientRect().left;
+    oy = e.clientY - win.getBoundingClientRect().top;
+    e.preventDefault();
   });
-})();
+
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    // Constrain to viewport
+    const maxX = window.innerWidth  - win.offsetWidth;
+    const maxY = window.innerHeight - win.offsetHeight;
+    win.style.left = Math.max(0, Math.min(e.clientX - ox, maxX)) + 'px';
+    win.style.top  = Math.max(0, Math.min(e.clientY - oy, maxY)) + 'px';
+  });
+
+  document.addEventListener('mouseup', () => {
+    dragging = false;
+    win.classList.remove('dragging');
+  });
+
+  // Touch drag
+  win.addEventListener('touchstart', e => {
+    dragging = true;
+    win.style.zIndex = ++topZ;
+    ox = e.touches[0].clientX - win.getBoundingClientRect().left;
+    oy = e.touches[0].clientY - win.getBoundingClientRect().top;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const maxX = window.innerWidth  - win.offsetWidth;
+    const maxY = window.innerHeight - win.offsetHeight;
+    win.style.left = Math.max(0, Math.min(e.touches[0].clientX - ox, maxX)) + 'px';
+    win.style.top  = Math.max(0, Math.min(e.touches[0].clientY - oy, maxY)) + 'px';
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => { dragging = false; });
+});
 </script>
-
 </body>
 </html>

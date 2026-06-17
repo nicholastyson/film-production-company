@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Strange Body Films / Corps Étrange</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.typekit.net/qmq4njx.css" />
+  <script>
+    (function() {
+      const t = localStorage.getItem('ce-theme'); if (t) document.documentElement.dataset.theme = t;
+      const l = localStorage.getItem('ce-lang');  if (l) document.documentElement.dataset.lang  = l;
+    })();
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #000; --cream: #EDE9E1; --muted: #6E6A65; --muted2: #4A4744;
+      --rule: rgba(237,233,225,0.10); --rule-mid: rgba(237,233,225,0.22);
+      --nav-h: 60px; --pad-x: clamp(28px, 6vw, 88px);
+      --font-d: 'Cormorant Garamond', Georgia, serif;
+      --font-b: 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--black); color: var(--cream); font-family: var(--font-b); font-weight: 300; font-size: 14px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    html[data-lang="en"] .fr { display: none !important; }
+    html[data-lang="fr"] .en { display: none !important; }
+
+    /* Grain */
+    #grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.036; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 200px; }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--pad-x); border-bottom: 1px solid var(--rule); }
+    .nav-logo { position: relative; text-decoration: none; display: inline-block; }
+    .logo-line { font-family: gunter, sans-serif; font-style: normal; font-weight: 200; font-size: 1.575rem; letter-spacing: 0.04em; color: var(--cream); display: block; line-height: 1.1; user-select: none; }
+    .nav-right { display: flex; align-items: center; gap: clamp(18px, 3vw, 40px); }
+    .nav-links { display: flex; list-style: none; gap: clamp(14px, 2.5vw, 36px); }
+    .nav-links a { font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--cream); }
+    .lang-toggle { display: flex; gap: 2px; }
+    .lang-btn { background: none; border: none; cursor: pointer; font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding: 4px 7px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+    .lang-btn:hover { color: var(--cream); }
+    .lang-btn.active { color: var(--cream); border-bottom-color: var(--cream); }
+    .theme-toggle { display: flex; gap: 2px; margin-right: 4px; }
+    .theme-btn { background: none; border: none; cursor: pointer; font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding: 4px 7px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+    .theme-btn:hover { color: var(--cream); }
+    .theme-btn.active { color: var(--cream); border-bottom-color: var(--cream); }
+
+    /* About layout */
+    .page { display: flex; flex-direction: column; min-height: 100vh; padding-top: var(--nav-h); overflow-y: auto; scrollbar-width: none; }
+    .page::-webkit-scrollbar { display: none; }
+    .page-inner { padding: clamp(32px, 5vh, 56px) var(--pad-x); width: 100%; max-width: 1400px; margin: 0 auto; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 7vw, 96px); align-items: start; }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } .directors-grid { grid-template-columns: 1fr !important; } }
+    .about-text p { font-size: clamp(13px, 1.3vw, 15px); line-height: 1.9; color: var(--muted); margin-bottom: 1.3em; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-aside { display: flex; flex-direction: column; gap: clamp(24px, 3vh, 36px); }
+    .pull-quote { font-family: var(--font-d); font-style: italic; font-weight: 300; font-size: clamp(1.05rem, 2.2vw, 1.5rem); line-height: 1.55; color: var(--cream); padding-left: 20px; border-left: 1px solid var(--rule-mid); }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); border: 1px solid rgba(237,233,225,0.15); padding: 5px 10px; }
+
+    /* People section */
+    .section-divider { border: none; border-top: 1px solid var(--rule); margin: clamp(40px, 7vh, 72px) 0; }
+    .section-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted2); margin-bottom: clamp(16px, 2.5vh, 24px); }
+    .dir-row { display: grid; grid-template-columns: 1fr auto; gap: 0 clamp(12px, 2.5vw, 32px); align-items: baseline; padding: clamp(9px, 1.4vh, 16px) 0; border-bottom: 1px solid var(--rule); }
+    .dir-row:first-child { border-top: 1px solid var(--rule); }
+    .dir-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .dir-name { font-family: var(--font-d); font-style: italic; font-weight: 400; font-size: clamp(1.0rem, 1.8vw, 1.45rem); color: var(--cream); line-height: 1.2; }
+    .dir-bio-inline { font-size: 11px; color: var(--muted); line-height: 1.6; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease, margin-top 0.3s ease; }
+    .dir-row:hover .dir-bio-inline { max-height: 120px; opacity: 1; margin-top: 4px; }
+    .dir-role { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; align-self: center; }
+
+    /* Light theme */
+    html[data-theme="light"] { --black: #f8f5f0; --cream: #0d0d0d; --muted: #5a5a5a; --muted2: #999; --rule: rgba(0,0,0,0.10); --rule-mid: rgba(0,0,0,0.22); }
+    html[data-theme="light"] body { background: var(--black); color: var(--cream); }
+    html[data-theme="light"] .tag { border-color: rgba(0,0,0,0.15); }
+    body, nav, .about-text p, .pull-quote, .tag, .lang-btn, .nav-links a { transition-property: color, background-color, border-color; transition-duration: 0.45s; transition-timing-function: ease; }
+  </style>
+</head>
+<body>
+<div id="grain"></div>
+<nav>
+  <a class="nav-logo" href="index.html" id="logo-link">
+    <span class="logo-line" id="logo-line-1">Strange</span>
+    <span class="logo-line" id="logo-line-2">Body</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="films.html"><span class="en">Films</span><span class="fr">Films</span></a></li>
+      <li><a href="about.html" class="active"><span class="en">About</span><span class="fr">À&nbsp;propos</span></a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="theme-toggle">
+      <button class="theme-btn" data-theme-val="dark">Dark</button>
+      <button class="theme-btn" data-theme-val="light">Light</button>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="en">Strange Body Films is a Paris-based production company working at the intersection of documentary rigor and experimental form. We make films across categories — work that traverses cinema, television and galleries. We produce films, long-form series, and installations, and our films have screened at Rotterdam, Oberhausen, BFI Flare, and across the festival circuit.</p>
+        <p class="fr">Strange Body Films est une société de production parisienne qui travaille à l'intersection de la rigueur documentaire et de la forme expérimentale. Nous faisons des films qui traversent les catégories — cinéma, télévision et galeries. Nous produisons des films, des séries longues et des installations, et nos films ont été présentés à Rotterdam, Oberhausen, BFI Flare, et sur l'ensemble du circuit des festivals.</p>
+        <p class="en">We are drawn to bodies in transformation: bodies of water, of data, of desire, of evidence.</p>
+        <p class="fr">Nous sommes attirés par les corps en transformation : corps d'eau, de données, de désir, de preuves.</p>
+        <p class="en">Corps Étrange — strange body — is the organizing idea: the body that doesn't fit, that refuses categorization, that generates its own frequency.</p>
+        <p class="fr">Corps Étrange est l'idée centrale : le corps qui ne rentre pas dans les cases, qui refuse la catégorisation, qui génère sa propre fréquence.</p>
+      </div>
+      <div class="about-aside">
+        <blockquote class="pull-quote en">"We want a new framework and for this framework, we want new skin." — Legacy Russell, <em>Glitch Feminism</em></blockquote>
+        <blockquote class="pull-quote fr">« Nous voulons un nouveau cadre et pour ce cadre, nous voulons une nouvelle peau. » — Legacy Russell, <em>Glitch Feminism</em></blockquote>
+        <div class="tags">
+          <span class="tag en">Documentary</span><span class="tag fr">Documentaire</span>
+          <span class="tag en">Queer Cinema</span><span class="tag fr">Cinéma queer</span>
+          <span class="tag en">Experimental</span><span class="tag fr">Expérimental</span>
+          <span class="tag en">Essay Film</span><span class="tag fr">Film-essai</span>
+          <span class="tag">CNC · ARTE France</span>
+          <span class="tag">IFFR · DOK Leipzig</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <div class="section-label en">People</div>
+    <div class="section-label fr">Équipe</div>
+
+    <div class="dir-list">
+
+      <div class="dir-row">
+        <div class="dir-main">
+          <span class="dir-name">Nick Tyson</span>
+          <span class="dir-bio-inline en">Paris-based filmmaker, editor, and producer. His work explores queer embodiment and sensorial experience across experimental cinema, observational documentary, and sensory ethnography. Tracing Utopia premiered at IFFR in 2021; his work has screened at Oberhausen, BFI Flare, É Tudo Verdade, and Anthology Film Archives. Graduate of Columbia University; masters from Université Paris-Nanterre in documentary film and visual anthropology. Member of L'Etna, an experimental film laboratory in Montreuil working in 16mm.</span>
+          <span class="dir-bio-inline fr">Cinéaste, monteur et producteur basé à Paris. Son travail explore l'incarnation queer et l'expérience sensorielle à travers le cinéma expérimental, le documentaire d'observation et l'ethnographie sensorielle. Tracing Utopia a été présenté en première à l'IFFR en 2021 ; son travail a été projeté à Oberhausen, BFI Flare, É Tudo Verdade et à l'Anthology Film Archives. Diplômé de Columbia University ; master de l'Université Paris-Nanterre en cinéma documentaire et anthropologie visuelle. Membre de L'Etna, laboratoire de cinéma expérimental à Montreuil.</span>
+        </div>
+        <span class="dir-role en">Founder · Producer</span>
+        <span class="dir-role fr">Fondateur · Producteur</span>
+      </div>
+
+      <div class="dir-row">
+        <div class="dir-main">
+          <span class="dir-name">Carson Parish</span>
+          <span class="dir-bio-inline en">Add bio here.</span>
+          <span class="dir-bio-inline fr">Ajouter une biographie ici.</span>
+        </div>
+        <span class="dir-role en">Director</span>
+        <span class="dir-role fr">Réalisateur</span>
+      </div>
+
+      <div class="dir-row">
+        <div class="dir-main">
+          <span class="dir-name">Jean Sonderand</span>
+          <span class="dir-bio-inline en">Add bio here.</span>
+          <span class="dir-bio-inline fr">Ajouter une biographie ici.</span>
+        </div>
+        <span class="dir-role en">Director</span>
+        <span class="dir-role fr">Réalisateur·ice</span>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  localStorage.setItem('ce-lang', lang);
+}
+const savedLang = localStorage.getItem('ce-lang') || 'en';
+setLang(savedLang);
+
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem('ce-theme', t);
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.themeVal === t));
+}
+setTheme(localStorage.getItem('ce-theme') || 'dark');
+document.querySelectorAll('.theme-btn').forEach(btn => {
+  btn.addEventListener('click', () => setTheme(btn.dataset.themeVal));
+});
+(function() {
+  const line1 = document.getElementById('logo-line-1');
+  const line2 = document.getElementById('logo-line-2');
+  if (!line1 || !line2) return;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&*àéèêç';
+  let timers = [];
+  function scrambleTo(el, target, delay, duration) {
+    const frames = 18, step = duration / frames;
+    let frame = 0;
+    const tid = setTimeout(() => {
+      const iv = setInterval(() => {
+        frame++;
+        const done = Math.floor((frame / frames) * target.length);
+        let out = target.slice(0, done);
+        for (let i = done; i < target.length; i++) out += target[i] === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)];
+        el.textContent = out;
+        if (frame >= frames) { el.textContent = target; clearInterval(iv); }
+      }, step);
+      timers.push(iv);
+    }, delay);
+    timers.push(tid);
+  }
+  function clearTimers() { timers.forEach(t => { clearInterval(t); clearTimeout(t); }); timers = []; }
+  const logo = document.getElementById('logo-link');
+  if (!logo) return;
+  logo.addEventListener('mouseenter', () => { clearTimers(); scrambleTo(line1, 'Corps', 0, 320); scrambleTo(line2, 'Étrange', 60, 380); });
+  logo.addEventListener('mouseleave', () => { clearTimers(); scrambleTo(line1, 'Strange', 0, 260); scrambleTo(line2, 'Body', 40, 220); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Films — Strange Body Films / Corps Étrange</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.typekit.net/qmq4njx.css" />
+  <script>
+    (function() {
+      const t = localStorage.getItem('ce-theme'); if (t) document.documentElement.dataset.theme = t;
+      const l = localStorage.getItem('ce-lang');  if (l) document.documentElement.dataset.lang  = l;
+    })();
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #000; --cream: #EDE9E1; --muted: #6E6A65; --muted2: #4A4744;
+      --rule: rgba(237,233,225,0.10); --rule-mid: rgba(237,233,225,0.22);
+      --nav-h: 60px; --pad-x: clamp(28px, 6vw, 88px);
+      --font-d: 'Cormorant Garamond', Georgia, serif;
+      --font-b: 'Inter', system-ui, sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--black); color: var(--cream); font-family: var(--font-b); font-weight: 300; font-size: 14px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    html[data-lang="en"] .fr { display: none !important; }
+    html[data-lang="fr"] .en { display: none !important; }
+
+    /* Grain */
+    #grain { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.036; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 200px; }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--pad-x); border-bottom: 1px solid var(--rule); }
+    .nav-logo { position: relative; text-decoration: none; display: inline-block; }
+    .logo-line { font-family: gunter, sans-serif; font-style: normal; font-weight: 200; font-size: 1.575rem; letter-spacing: 0.04em; color: var(--cream); display: block; line-height: 1.1; user-select: none; }
+    .nav-right { display: flex; align-items: center; gap: clamp(18px, 3vw, 40px); }
+    .nav-links { display: flex; list-style: none; gap: clamp(14px, 2.5vw, 36px); }
+    .nav-links a { font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--cream); }
+    .lang-toggle { display: flex; gap: 2px; }
+    .lang-btn { background: none; border: none; cursor: pointer; font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding: 4px 7px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+    .lang-btn:hover { color: var(--cream); }
+    .lang-btn.active { color: var(--cream); border-bottom-color: var(--cream); }
+    .theme-toggle { display: flex; gap: 2px; margin-right: 4px; }
+    .theme-btn { background: none; border: none; cursor: pointer; font-family: var(--font-b); font-size: 10px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding: 4px 7px; border-bottom: 1px solid transparent; transition: color 0.3s, border-color 0.3s; }
+    .theme-btn:hover { color: var(--cream); }
+    .theme-btn.active { color: var(--cream); border-bottom-color: var(--cream); }
+
+    /* Films layout */
+    .page { display: flex; height: 100vh; padding-top: var(--nav-h); }
+
+    .films-list {
+      flex: 0 0 46%;
+      padding: clamp(32px, 5vh, 56px) clamp(16px, 3vw, 44px) clamp(20px, 4vh, 40px) var(--pad-x);
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; z-index: 1;
+      overflow-y: auto; scrollbar-width: none;
+    }
+    .films-list::-webkit-scrollbar { display: none; }
+
+    .films-image-pane { flex: 1; position: relative; overflow: hidden; }
+    .films-image-pane::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 160px;
+      background: linear-gradient(to right, var(--black), transparent);
+      z-index: 2; pointer-events: none;
+      transition: background 0.45s ease;
+    }
+    .films-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.7s ease; }
+    .films-img.active { opacity: 0.80; }
+
+    .films-section { flex-shrink: 0; }
+    .films-section + .films-section { margin-top: clamp(20px, 3.5vh, 36px); }
+
+    .films-sublabel { display: flex; align-items: center; gap: 16px; margin-bottom: clamp(8px, 1.4vh, 14px); }
+    .films-sublabel span { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; flex-shrink: 0; }
+    .films-sublabel::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+    .film-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 0 clamp(12px, 2.5vw, 32px); align-items: baseline; padding: clamp(9px, 1.4vh, 16px) 0; border-bottom: 1px solid var(--rule); cursor: pointer; position: relative; text-decoration: none; color: inherit; }
+    .film-row:first-child { border-top: 1px solid var(--rule); }
+    .film-row-arrow { font-size: 10px; color: var(--muted2); opacity: 0; transition: opacity 0.3s, transform 0.3s; align-self: center; }
+    .film-row:hover .film-row-arrow { opacity: 1; transform: translateX(3px); }
+    .film-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .film-t { font-family: var(--font-d); font-style: italic; font-weight: 400; font-size: clamp(1.0rem, 1.8vw, 1.45rem); color: var(--cream); line-height: 1.2; transition: letter-spacing 0.4s var(--ease); }
+    .film-row:hover .film-t { letter-spacing: 0.01em; }
+    .film-desc-inline { font-size: 11px; color: var(--muted); line-height: 1.6; max-width: 400px; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.45s var(--ease), opacity 0.4s ease, margin-top 0.3s ease; }
+    .film-row:hover .film-desc-inline,
+    .film-row.open  .film-desc-inline { max-height: 72px; opacity: 1; margin-top: 4px; }
+    .film-type-col { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; align-self: center; }
+    .film-year-col { font-size: 10px; letter-spacing: 0.12em; color: var(--muted2); white-space: nowrap; align-self: center; min-width: 36px; text-align: right; }
+
+    @media (max-width: 720px) {
+      .page { flex-direction: column; }
+      .films-list { flex: none; padding-right: var(--pad-x); }
+      .films-image-pane { display: none; }
+      .film-row { grid-template-columns: 1fr auto; }
+      .film-type-col { display: none; }
+    }
+
+    /* Light theme */
+    html[data-theme="light"] { --black: #f8f5f0; --cream: #0d0d0d; --muted: #5a5a5a; --muted2: #999; --rule: rgba(0,0,0,0.10); --rule-mid: rgba(0,0,0,0.22); }
+    html[data-theme="light"] body { background: var(--black); color: var(--cream); }
+    body, nav, .film-t, .films-sublabel span, .lang-btn, .nav-links a { transition-property: color, background-color, border-color; transition-duration: 0.45s; transition-timing-function: ease; }
+  </style>
+</head>
+<body>
+<div id="grain"></div>
+<nav>
+  <a class="nav-logo" href="index.html" id="logo-link">
+    <span class="logo-line" id="logo-line-1">Strange</span>
+    <span class="logo-line" id="logo-line-2">Body</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="films.html" class="active"><span class="en">Films</span><span class="fr">Films</span></a></li>
+      <li><a href="about.html"><span class="en">About</span><span class="fr">À&nbsp;propos</span></a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="theme-toggle">
+      <button class="theme-btn" data-theme-val="dark">Dark</button>
+      <button class="theme-btn" data-theme-val="light">Light</button>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FR</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <!-- Left: film list -->
+  <div class="films-list">
+
+    <div class="films-section">
+      <div class="films-sublabel">
+        <span class="en">In Development</span>
+        <span class="fr">En développement</span>
+      </div>
+      <a class="film-row" href="body-language.html" data-imgs="images/body-language-1.jpg,images/body-language-2.jpg">
+        <div class="film-main">
+          <span class="film-t">Body Language</span>
+          <span class="film-desc-inline en">A meta-documentary about the life and afterlife of Linus Herrell — a gay Clevelander who helped awaken his city to the AIDS crisis, died in 1990 at 38, and whose ashes were recently rediscovered at a BDSM retreat in rural Pennsylvania.</span>
+          <span class="film-desc-inline fr">Un méta-documentaire sur la vie et l'au-delà de Linus Herrell — un gay de Cleveland mort du SIDA en 1990 à 38 ans, dont les cendres ont été récemment retrouvées dans une retraite BDSM en Pennsylvanie rurale.</span>
+        </div>
+        <span class="film-type-col en">Feature Documentary</span>
+        <span class="film-type-col fr">Long métrage documentaire</span>
+        <span class="film-year-col"></span>
+        <span class="film-row-arrow">→</span>
+      </a>
+      <a class="film-row" href="negro-creek.html" data-imgs="images/negro-creek-1.jpg,images/negro-creek-2.jpg">
+        <div class="film-main">
+          <span class="film-t">Negro Creek</span>
+          <span class="film-desc-inline en">A documentary exploring the history and cultural significance of Negro Creek — a small Kansas tributary whose name traces back to an 1850s racial violence incident. Combines traditional interviews with experimental choreography.</span>
+          <span class="film-desc-inline fr">Un documentaire sur l'histoire et la signification culturelle de Negro Creek — un ruisseau du Kansas dont le nom remonte à un incident de violence raciale dans les années 1850. Mêle entretiens traditionnels et chorégraphie expérimentale.</span>
+        </div>
+        <span class="film-type-col en">Feature Documentary</span>
+        <span class="film-type-col fr">Long métrage documentaire</span>
+        <span class="film-year-col"></span>
+        <span class="film-row-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="films-section">
+      <div class="films-sublabel"><span>Films</span></div>
+      <a class="film-row" href="mr-bound-and-gagged.html" data-imgs="images/bound-gagged-1.jpg,images/bound-gagged-2.jpg">
+        <div class="film-main">
+          <span class="film-t">Mr. Bound &amp; Gagged</span>
+          <span class="film-desc-inline en">Bob Wingate and Lee Clauss, former publishers of the legendary Bound &amp; Gagged magazine, open the archive and the floodgates in this richly layered excavation of queer kink, media history, and erotic resistance. Set against the Leather Archives &amp; Museum in Chicago. (CUFF 32)</span>
+          <span class="film-desc-inline fr">Bob Wingate et Lee Clauss, anciens éditeurs du légendaire magazine Bound &amp; Gagged, ouvrent les archives dans cette excavation de l'histoire du kink queer, des médias et de la résistance érotique. (CUFF 32)</span>
+        </div>
+        <span class="film-type-col en">Documentary · 35min</span>
+        <span class="film-type-col fr">Documentaire · 35min</span>
+        <span class="film-year-col">2025</span>
+        <span class="film-row-arrow">→</span>
+      </a>
+      <a class="film-row" href="queens-of-stonewall.html" data-imgs="images/queens-stonewall-1.jpg,images/queens-stonewall-2.jpg">
+        <div class="film-main">
+          <span class="film-t">Miss Simone &amp; The Queens of Stonewall</span>
+          <span class="film-desc-inline en">Portrait of Miss Simone of the West Village and the community of LGBTQ+ survivors and performers who surround her, through the AIDS epidemic, transphobia, and outdoor drag shows at the Stonewall National Monument during COVID-19.</span>
+          <span class="film-desc-inline fr">Portrait de Miss Simone du West Village et de la communauté de survivants et performeurs LGBTQ+ qui l'entourent, à travers l'épidémie du SIDA, la transphobie et les performances de drag au Monument de Stonewall pendant le COVID-19.</span>
+        </div>
+        <span class="film-type-col en">Documentary · 20min</span>
+        <span class="film-type-col fr">Documentaire · 20min</span>
+        <span class="film-year-col">TBD</span>
+        <span class="film-row-arrow">→</span>
+      </a>
+      <a class="film-row" href="past.html" data-imgs="images/past-1.jpg,images/past-2.jpg">
+        <div class="film-main">
+          <span class="film-t">P.A.S.T.</span>
+          <span class="film-desc-inline en">Across a post-human desert of trash, a robotic intelligence rummages through the detritus of civilization in search of the remnants of a long lost love affair between humans and machines. (Festival du Film de Fesses · MixBrasil)</span>
+          <span class="film-desc-inline fr">À travers un désert post-humain de déchets, une intelligence robotique fouille les débris de la civilisation à la recherche des vestiges d'une histoire d'amour perdue entre les humains et les machines. (Festival du Film de Fesses · MixBrasil)</span>
+        </div>
+        <span class="film-type-col en">Experimental · 14min</span>
+        <span class="film-type-col fr">Expérimental · 14min</span>
+        <span class="film-year-col"></span>
+        <span class="film-row-arrow">→</span>
+      </a>
+      <a class="film-row" href="tracing-utopia.html" data-imgs="images/tracing-utopia-2.jpg,images/tracing-utopia-1.jpg,images/tracing-utopia-3.jpg">
+        <div class="film-main">
+          <span class="film-t">Tracing Utopia</span>
+          <span class="film-desc-inline en">An odyssey into the dreams of queer teens in New York City as they envision a better world. A collaborative manifesto of queer community transcending time. Best International Narrative Short, Kashish. (IFFR · BFI Flare · Oberhausen · 50+ festivals)</span>
+          <span class="film-desc-inline fr">Une odyssée dans les rêves de jeunes queers à New York qui imaginent un monde meilleur. Un manifeste collaboratif sur la communauté queer qui transcende le temps. Meilleur court métrage, Kashish. (IFFR · BFI Flare · Oberhausen)</span>
+        </div>
+        <span class="film-type-col en">Documentary · 27min</span>
+        <span class="film-type-col fr">Documentaire · 27min</span>
+        <span class="film-year-col">2021</span>
+        <span class="film-row-arrow">→</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Right: image pane -->
+  <div class="films-image-pane">
+    <img class="films-img" id="films-img-a" src="" alt="">
+    <img class="films-img" id="films-img-b" src="" alt="">
+  </div>
+</div>
+
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  localStorage.setItem('ce-lang', lang);
+}
+const savedLang = localStorage.getItem('ce-lang') || 'en';
+setLang(savedLang);
+
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem('ce-theme', t);
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.toggle('active', b.dataset.themeVal === t));
+}
+setTheme(localStorage.getItem('ce-theme') || 'dark');
+document.querySelectorAll('.theme-btn').forEach(btn => {
+  btn.addEventListener('click', () => setTheme(btn.dataset.themeVal));
+});
+(function() {
+  const line1 = document.getElementById('logo-line-1');
+  const line2 = document.getElementById('logo-line-2');
+  if (!line1 || !line2) return;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&*àéèêç';
+  let timers = [];
+  function scrambleTo(el, target, delay, duration) {
+    const frames = 18, step = duration / frames;
+    let frame = 0;
+    const tid = setTimeout(() => {
+      const iv = setInterval(() => {
+        frame++;
+        const done = Math.floor((frame / frames) * target.length);
+        let out = target.slice(0, done);
+        for (let i = done; i < target.length; i++) out += target[i] === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)];
+        el.textContent = out;
+        if (frame >= frames) { el.textContent = target; clearInterval(iv); }
+      }, step);
+      timers.push(iv);
+    }, delay);
+    timers.push(tid);
+  }
+  function clearTimers() { timers.forEach(t => { clearInterval(t); clearTimeout(t); }); timers = []; }
+  const logo = document.getElementById('logo-link');
+  if (!logo) return;
+  logo.addEventListener('mouseenter', () => { clearTimers(); scrambleTo(line1, 'Corps', 0, 320); scrambleTo(line2, 'Étrange', 60, 380); });
+  logo.addEventListener('mouseleave', () => { clearTimers(); scrambleTo(line1, 'Strange', 0, 260); scrambleTo(line2, 'Body', 40, 220); });
+})();
+
+// Film still crossfade
+(function() {
+  const imgA = document.getElementById('films-img-a');
+  const imgB = document.getElementById('films-img-b');
+  if (!imgA || !imgB) return;
+  let slot = 'a', cycleTimer = null, hovered = false;
+
+  // Collect all images from all rows, Body Language first (first row in DOM)
+  const allImgs = [];
+  document.querySelectorAll('.film-row[data-imgs]').forEach(row => {
+    row.dataset.imgs.split(',').map(s => s.trim()).forEach(src => allImgs.push(src));
+  });
+
+  // Preload all
+  allImgs.forEach(src => { const i = new Image(); i.src = src; });
+
+  function swap(src) {
+    if (slot === 'a') { imgB.src = src; imgB.classList.add('active'); imgA.classList.remove('active'); slot = 'b'; }
+    else              { imgA.src = src; imgA.classList.add('active'); imgB.classList.remove('active'); slot = 'a'; }
+  }
+
+  function startCycle(imgs, interval) {
+    clearInterval(cycleTimer);
+    let idx = 0; swap(imgs[0]);
+    cycleTimer = imgs.length > 1 ? setInterval(() => { idx = (idx + 1) % imgs.length; swap(imgs[idx]); }, interval) : null;
+  }
+
+  // Start slow global cycle through all images
+  startCycle(allImgs, 4800);
+
+  document.querySelectorAll('.film-row[data-imgs]').forEach(row => {
+    const imgs = row.dataset.imgs.split(',').map(s => s.trim());
+    row.addEventListener('mouseenter', () => { hovered = true; startCycle(imgs, 3200); });
+    row.addEventListener('mouseleave', () => { hovered = false; startCycle(allImgs, 4800); });
+  });
+})();
+</script>
+</body>
+</html>
