@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en">
+<html lang="en" data-lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -66,8 +66,8 @@
     .logo-text, .logo-alt {
       font-family: gunter, sans-serif;
       font-style: normal; font-weight: 200;
-      font-size: 1.05rem; letter-spacing: 0.04em;
-      color: var(--cream); white-space: nowrap; display: block;
+      font-size: 1.575rem; letter-spacing: 0.04em;
+      color: var(--cream); display: block; line-height: 1.1;
       transition: opacity 0.35s ease; user-select: none;
     }
     .logo-alt {
@@ -292,6 +292,32 @@
       font-size: 10px; letter-spacing: 0.14em; color: var(--muted2);
     }
 
+    /* ── Light / English theme ─────────────────────────── */
+    html[data-theme="light"] {
+      --black:    #f8f5f0;
+      --cream:    #0d0d0d;
+      --muted:    #5a5a5a;
+      --muted2:   #999;
+      --rule:     rgba(0,0,0,0.10);
+      --rule-mid: rgba(0,0,0,0.22);
+    }
+    html[data-theme="light"] body { background: var(--black); color: var(--cream); }
+
+    /* Swap logo: Strange Body by default, hover reveals Corps Étrange */
+    html[data-theme="light"] .logo-text { opacity: 0; }
+    html[data-theme="light"] .logo-alt  { opacity: 1; }
+    html[data-theme="light"] .nav-logo:hover .logo-text { opacity: 1; }
+    html[data-theme="light"] .nav-logo:hover .logo-alt  { opacity: 0; }
+
+    /* Smooth theme transition */
+    body, nav, .film-t, .films-sublabel span, .hero-hint,
+    .dot, .nav-links button, .lang-btn, .about-text p,
+    .pull-quote, .tag, .contact-label, .contact-val {
+      transition-property: color, background-color, border-color, opacity;
+      transition-duration: 0.45s;
+      transition-timing-function: ease;
+    }
+
   </style>
 </head>
 <body>
@@ -299,9 +325,9 @@
 
 <!-- ══ Nav ═════════════════════════════════════════════════ -->
 <nav>
-  <a class="nav-logo" onclick="goTo(0)">
-    <span class="logo-text">Corps&nbsp;Étrange</span>
-    <span class="logo-alt">Strange&nbsp;Body</span>
+  <a class="nav-logo" id="logo-toggle">
+    <span class="logo-text">Corps<br>Étrange</span>
+    <span class="logo-alt">Strange<br>Body</span>
   </a>
   <div class="nav-right">
     <ul class="nav-links">
@@ -316,13 +342,6 @@
   </div>
 </nav>
 
-<!-- ══ Dots ════════════════════════════════════════════════ -->
-<div id="dots">
-  <button class="dot active" onclick="goTo(0)"></button>
-  <button class="dot" onclick="goTo(1)"></button>
-  <button class="dot" onclick="goTo(2)"></button>
-  <button class="dot" onclick="goTo(3)"></button>
-</div>
 
 <!-- ══════════════════════════════════════════════════════════
      PANEL 0 — HERO
@@ -501,6 +520,15 @@ function setLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
 }
 setLang('en');
+
+// ── Theme toggle via logo ─────────────────────────────────
+(function() {
+  const logo = document.getElementById('logo-toggle');
+  const html = document.documentElement;
+  logo.addEventListener('click', () => {
+    html.dataset.theme = html.dataset.theme === 'light' ? 'dark' : 'light';
+  });
+})();
 
 // ── Film still crossfade ───────────────────────────────────
 (function() {
