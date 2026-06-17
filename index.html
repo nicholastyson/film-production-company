@@ -102,6 +102,48 @@
     html[data-theme="light"] .win-bar { background: rgba(0,0,0,0.03); }
     html[data-theme="light"] .win-body { background: #f0ede8; }
     body, nav, .lang-btn, .nav-links a, .win-title { transition-property: color, background-color, border-color; transition-duration: 0.45s; transition-timing-function: ease; }
+
+    /* ── Mobile ────────────────────────────────────────── */
+    @media (max-width: 700px) {
+      html, body { overflow-y: auto; height: auto; }
+      nav { position: sticky; top: 0; z-index: 500; }
+      #win-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding-top: 2px;
+      }
+      .win {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        z-index: auto !important;
+        width: 100% !important;
+        cursor: default;
+        border-left: none;
+        border-right: none;
+      }
+      .win:hover { box-shadow: none; }
+      .win.dragging { box-shadow: none; cursor: default; }
+      .win-body {
+        width: 100% !important;
+        height: 58vw !important;
+      }
+      #enter {
+        position: relative;
+        bottom: auto; left: auto; transform: none;
+        display: block;
+        text-align: center;
+        padding: 36px var(--pad-x) 52px;
+        font-size: 11px;
+        letter-spacing: 0.32em;
+        color: var(--cream);
+        border-top: 1px solid var(--rule-mid);
+        margin-top: 2px;
+        z-index: 1;
+      }
+      #enter:hover { letter-spacing: 0.32em; color: var(--cream); }
+    }
   </style>
 </head>
 <body>
@@ -129,6 +171,7 @@
   </div>
 </nav>
 
+<div id="win-stack">
 <div class="win" id="win1" style="left:7%; top:14%; z-index:10;">
   <div class="win-body" style="width:480px; height:360px;">
     <video autoplay loop muted playsinline><source src="videos/corps-etrange-1.mp4" type="video/mp4"></video>
@@ -188,6 +231,8 @@
     <video autoplay loop muted playsinline><source src="videos/corps-etrange-12.mp4" type="video/mp4"></video>
   </div>
 </div>
+
+</div><!-- /win-stack -->
 
 <a id="enter" href="films.html">
   <span class="en">Enter</span>
