@@ -77,7 +77,7 @@
     .films-sublabel span { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; flex-shrink: 0; }
     .films-sublabel::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
 
-    .film-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 0 clamp(12px, 2.5vw, 32px); align-items: baseline; padding: clamp(9px, 1.4vh, 16px) 0; border-bottom: 1px solid var(--rule); cursor: pointer; position: relative; text-decoration: none; color: inherit; }
+    .film-row { display: grid; grid-template-columns: 1fr auto auto auto auto; gap: 0 clamp(12px, 2.5vw, 32px); align-items: baseline; padding: clamp(9px, 1.4vh, 16px) 0; border-bottom: 1px solid var(--rule); cursor: pointer; position: relative; text-decoration: none; color: inherit; }
     .film-row:first-child { border-top: 1px solid var(--rule); }
     .film-row-arrow { font-size: 10px; color: var(--muted2); opacity: 0; transition: opacity 0.3s, transform 0.3s; align-self: center; }
     .film-row:hover .film-row-arrow { opacity: 1; transform: translateX(3px); }
@@ -88,6 +88,8 @@
     .film-row:hover .film-desc-inline,
     .film-row.open  .film-desc-inline { max-height: 72px; opacity: 1; margin-top: 4px; }
     .film-type-col { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; align-self: center; }
+    .film-type-col.feature { grid-column: span 2; text-align: right; }
+    .film-runtime-col { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; align-self: center; }
     .film-year-col { font-size: 10px; letter-spacing: 0.12em; color: var(--muted2); white-space: nowrap; align-self: center; min-width: 36px; text-align: right; }
 
     @media (max-width: 720px) {
@@ -95,7 +97,7 @@
       .films-list { flex: none; padding-right: var(--pad-x); }
       .films-image-pane { display: none; }
       .film-row { grid-template-columns: 1fr auto; }
-      .film-type-col { display: none; }
+      .film-type-col, .film-runtime-col { display: none; }
     }
 
     /* Light theme */
@@ -143,8 +145,8 @@
           <span class="film-desc-inline en">A meta-documentary about the life and afterlife of Linus Herrell — a gay Clevelander who helped awaken his city to the AIDS crisis, died in 1990 at 38, and whose ashes were recently rediscovered at a BDSM retreat in rural Pennsylvania.</span>
           <span class="film-desc-inline fr">Un méta-documentaire sur la vie et l'au-delà de Linus Herrell — un gay de Cleveland mort du SIDA en 1990 à 38 ans, dont les cendres ont été récemment retrouvées dans une retraite BDSM en Pennsylvanie rurale.</span>
         </div>
-        <span class="film-type-col en">Feature Documentary</span>
-        <span class="film-type-col fr">Long métrage documentaire</span>
+        <span class="film-type-col feature en">Feature Documentary</span>
+        <span class="film-type-col feature fr">Long métrage documentaire</span>
         <span class="film-year-col"></span>
         <span class="film-row-arrow">→</span>
       </a>
@@ -154,8 +156,8 @@
           <span class="film-desc-inline en">A documentary exploring the history and cultural significance of Negro Creek — a small Kansas tributary whose name traces back to an 1850s racial violence incident. Combines traditional interviews with experimental choreography.</span>
           <span class="film-desc-inline fr">Un documentaire sur l'histoire et la signification culturelle de Negro Creek — un ruisseau du Kansas dont le nom remonte à un incident de violence raciale dans les années 1850. Mêle entretiens traditionnels et chorégraphie expérimentale.</span>
         </div>
-        <span class="film-type-col en">Feature Documentary</span>
-        <span class="film-type-col fr">Long métrage documentaire</span>
+        <span class="film-type-col feature en">Feature Documentary</span>
+        <span class="film-type-col feature fr">Long métrage documentaire</span>
         <span class="film-year-col"></span>
         <span class="film-row-arrow">→</span>
       </a>
@@ -169,8 +171,9 @@
           <span class="film-desc-inline en">Bob Wingate and Lee Clauss, former publishers of the legendary Bound &amp; Gagged magazine, open the archive and the floodgates in this richly layered excavation of queer kink, media history, and erotic resistance. Set against the Leather Archives &amp; Museum in Chicago. (CUFF 32)</span>
           <span class="film-desc-inline fr">Bob Wingate et Lee Clauss, anciens éditeurs du légendaire magazine Bound &amp; Gagged, ouvrent les archives dans cette excavation de l'histoire du kink queer, des médias et de la résistance érotique. (CUFF 32)</span>
         </div>
-        <span class="film-type-col en">Documentary · 35min</span>
-        <span class="film-type-col fr">Documentaire · 35min</span>
+        <span class="film-type-col en">Documentary</span>
+        <span class="film-type-col fr">Documentaire</span>
+        <span class="film-runtime-col">35min</span>
         <span class="film-year-col">2025</span>
         <span class="film-row-arrow">→</span>
       </a>
@@ -180,9 +183,10 @@
           <span class="film-desc-inline en">Portrait of Miss Simone of the West Village and the community of LGBTQ+ survivors and performers who surround her, through the AIDS epidemic, transphobia, and outdoor drag shows at the Stonewall National Monument during COVID-19.</span>
           <span class="film-desc-inline fr">Portrait de Miss Simone du West Village et de la communauté de survivants et performeurs LGBTQ+ qui l'entourent, à travers l'épidémie du SIDA, la transphobie et les performances de drag au Monument de Stonewall pendant le COVID-19.</span>
         </div>
-        <span class="film-type-col en">Documentary · 20min</span>
-        <span class="film-type-col fr">Documentaire · 20min</span>
-        <span class="film-year-col">TBD</span>
+        <span class="film-type-col en">Documentary</span>
+        <span class="film-type-col fr">Documentaire</span>
+        <span class="film-runtime-col">20min</span>
+        <span class="film-year-col">2025</span>
         <span class="film-row-arrow">→</span>
       </a>
       <a class="film-row" href="past.html" data-imgs="images/past-1.jpg,images/past-2.jpg">
@@ -191,9 +195,10 @@
           <span class="film-desc-inline en">Across a post-human desert of trash, a robotic intelligence rummages through the detritus of civilization in search of the remnants of a long lost love affair between humans and machines. (Festival du Film de Fesses · MixBrasil)</span>
           <span class="film-desc-inline fr">À travers un désert post-humain de déchets, une intelligence robotique fouille les débris de la civilisation à la recherche des vestiges d'une histoire d'amour perdue entre les humains et les machines. (Festival du Film de Fesses · MixBrasil)</span>
         </div>
-        <span class="film-type-col en">Experimental · 14min</span>
-        <span class="film-type-col fr">Expérimental · 14min</span>
-        <span class="film-year-col"></span>
+        <span class="film-type-col en">Experimental</span>
+        <span class="film-type-col fr">Expérimental</span>
+        <span class="film-runtime-col">14min</span>
+        <span class="film-year-col">2025</span>
         <span class="film-row-arrow">→</span>
       </a>
       <a class="film-row" href="tracing-utopia.html" data-imgs="images/tracing-utopia-2.jpg,images/tracing-utopia-1.jpg,images/tracing-utopia-3.jpg">
@@ -202,8 +207,9 @@
           <span class="film-desc-inline en">An odyssey into the dreams of queer teens in New York City as they envision a better world. A collaborative manifesto of queer community transcending time. Best International Narrative Short, Kashish. (IFFR · BFI Flare · Oberhausen · 50+ festivals)</span>
           <span class="film-desc-inline fr">Une odyssée dans les rêves de jeunes queers à New York qui imaginent un monde meilleur. Un manifeste collaboratif sur la communauté queer qui transcende le temps. Meilleur court métrage, Kashish. (IFFR · BFI Flare · Oberhausen)</span>
         </div>
-        <span class="film-type-col en">Documentary · 27min</span>
-        <span class="film-type-col fr">Documentaire · 27min</span>
+        <span class="film-type-col en">Documentary</span>
+        <span class="film-type-col fr">Documentaire</span>
+        <span class="film-runtime-col">27min</span>
         <span class="film-year-col">2021</span>
         <span class="film-row-arrow">→</span>
       </a>
