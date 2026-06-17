@@ -64,7 +64,7 @@
       cursor: pointer; display: inline-block;
     }
     .logo-text, .logo-alt {
-      font-family: bc-alphapipe, sans-serif;
+      font-family: gunter, sans-serif;
       font-style: normal; font-weight: 200;
       font-size: 1.05rem; letter-spacing: 0.04em;
       color: var(--cream); white-space: nowrap; display: block;
@@ -152,15 +152,36 @@
     }
 
     /* ── Films ────────────────────────────────────────── */
-    #panel-films .panel-inner {
-      gap: 0;
-      justify-content: center;
+    #panel-films { flex-direction: row; }
+
+    .films-list {
+      flex: 0 0 46%;
+      padding: clamp(32px, 5vh, 56px) clamp(16px, 3vw, 44px) clamp(20px, 4vh, 40px) var(--pad-x);
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; z-index: 1;
     }
 
+    /* Right: image viewport */
+    .films-image-pane {
+      flex: 1; position: relative; overflow: hidden;
+    }
+    .films-image-pane::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 160px;
+      background: linear-gradient(to right, #000, transparent);
+      z-index: 2; pointer-events: none;
+    }
+    .films-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0; transition: opacity 0.7s ease;
+    }
+    .films-img.active { opacity: 0.80; }
+
+    /* Sections */
     .films-section { flex-shrink: 0; }
     .films-section + .films-section { margin-top: clamp(20px, 3.5vh, 36px); }
 
-    /* Section sublabel row */
     .films-sublabel {
       display: flex; align-items: center; gap: 16px;
       margin-bottom: clamp(8px, 1.4vh, 14px);
@@ -170,56 +191,49 @@
       text-transform: uppercase; color: var(--muted2);
       white-space: nowrap; flex-shrink: 0;
     }
-    .films-sublabel::after {
-      content: ''; flex: 1; height: 1px;
-      background: var(--rule);
-    }
+    .films-sublabel::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
 
     /* Film rows */
     .film-row {
       display: grid;
       grid-template-columns: 1fr auto auto;
-      gap: 0 clamp(16px, 3vw, 40px);
+      gap: 0 clamp(12px, 2.5vw, 32px);
       align-items: baseline;
-      padding: clamp(9px, 1.4vh, 15px) 0;
+      padding: clamp(9px, 1.4vh, 16px) 0;
       border-bottom: 1px solid var(--rule);
       cursor: default; position: relative;
     }
     .film-row:first-child { border-top: 1px solid var(--rule); }
-    .film-row::before {
-      content: '';
-      position: absolute;
-      left: calc(-1 * var(--pad-x)); right: calc(-1 * var(--pad-x));
-      top: 0; bottom: 0;
-      background: rgba(255,255,255,0.018);
-      opacity: 0; transition: opacity 0.35s;
-      pointer-events: none;
-    }
-    .film-row:hover::before { opacity: 1; }
 
     .film-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .film-t {
       font-family: var(--font-d); font-style: italic; font-weight: 400;
       font-size: clamp(1.0rem, 1.8vw, 1.45rem);
       color: var(--cream); line-height: 1.2;
+      transition: letter-spacing 0.4s var(--ease);
     }
+    .film-row:hover .film-t { letter-spacing: 0.01em; }
+
     .film-desc-inline {
-      font-size: 11px; color: var(--muted); line-height: 1.5;
-      max-width: 560px; max-height: 0; overflow: hidden; opacity: 0;
-      transition: max-height 0.4s var(--ease), opacity 0.4s ease, margin-top 0.3s ease;
+      font-size: 11px; color: var(--muted); line-height: 1.6;
+      max-width: 400px; max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height 0.45s var(--ease), opacity 0.4s ease, margin-top 0.3s ease;
     }
-    .film-row:hover .film-desc-inline { max-height: 48px; opacity: 1; margin-top: 3px; }
+    .film-row:hover .film-desc-inline { max-height: 72px; opacity: 1; margin-top: 4px; }
 
     .film-type-col {
       font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
       color: var(--muted2); white-space: nowrap; align-self: center;
     }
     .film-year-col {
-      font-size: 10px; letter-spacing: 0.12em;
-      color: var(--muted2); white-space: nowrap;
-      align-self: center; min-width: 36px; text-align: right;
+      font-size: 10px; letter-spacing: 0.12em; color: var(--muted2);
+      white-space: nowrap; align-self: center; min-width: 36px; text-align: right;
     }
-    @media (max-width: 600px) {
+
+    @media (max-width: 720px) {
+      #panel-films { flex-direction: column; }
+      .films-list { flex: none; padding-right: var(--pad-x); }
+      .films-image-pane { display: none; }
       .film-row { grid-template-columns: 1fr auto; }
       .film-type-col { display: none; }
     }
@@ -324,7 +338,9 @@
      PANEL 1 — FILMS
 ═══════════════════════════════════════════════════════════ -->
 <div class="panel" id="panel-films">
-  <div class="panel-inner">
+
+  <!-- Left: film list -->
+  <div class="films-list">
 
     <!-- In Development -->
     <div class="films-section">
@@ -332,8 +348,7 @@
         <span class="en">In Development</span>
         <span class="fr">En développement</span>
       </div>
-
-      <div class="film-row">
+      <div class="film-row" data-imgs="images/body-language-1.jpg,images/body-language-2.jpg">
         <div class="film-main">
           <span class="film-t">Body Language</span>
           <span class="film-desc-inline en">A meta-documentary about the life and afterlife of Linus Herrell — a gay Clevelander who helped awaken his city to the AIDS crisis, died in 1990 at 38, and whose ashes were recently rediscovered at a BDSM retreat in rural Pennsylvania.</span>
@@ -350,8 +365,7 @@
       <div class="films-sublabel">
         <span>Films</span>
       </div>
-
-      <div class="film-row">
+      <div class="film-row" data-imgs="images/bound-gagged-1.jpg,images/bound-gagged-2.jpg">
         <div class="film-main">
           <span class="film-t">Mr. Bound &amp; Gagged</span>
           <span class="film-desc-inline en">Bob Wingate and Lee Clauss, former publishers of the legendary Bound &amp; Gagged magazine, open the archive and the floodgates in this richly layered excavation of queer kink, media history, and erotic resistance. Set against the Leather Archives &amp; Museum in Chicago. (CUFF 32)</span>
@@ -362,8 +376,26 @@
         <span class="film-year-col">2025</span>
       </div>
 
+      <div class="film-row" data-imgs="images/tracing-utopia-1.jpg,images/tracing-utopia-2.jpg,images/tracing-utopia-3.jpg">
+        <div class="film-main">
+          <span class="film-t">Tracing Utopia</span>
+          <span class="film-desc-inline en">An odyssey into the dreams of queer teens in New York City as they envision a better world. A collaborative manifesto of queer community transcending time. Best International Narrative Short, Kashish. (IFFR · BFI Flare · Oberhausen · 50+ festivals)</span>
+          <span class="film-desc-inline fr">Une odyssée dans les rêves de jeunes queers à New York qui imaginent un monde meilleur. Un manifeste collaboratif sur la communauté queer qui transcende le temps. Meilleur court métrage, Kashish. (IFFR · BFI Flare · Oberhausen)</span>
+        </div>
+        <span class="film-type-col en">Documentary · 27min</span>
+        <span class="film-type-col fr">Documentaire · 27min</span>
+        <span class="film-year-col">2021</span>
+      </div>
     </div>
+
+  </div><!-- /films-list -->
+
+  <!-- Right: image pane (crossfades on hover) -->
+  <div class="films-image-pane">
+    <img class="films-img" id="films-img-a" src="" alt="">
+    <img class="films-img" id="films-img-b" src="" alt="">
   </div>
+
 </div>
 
 <!-- ══════════════════════════════════════════════════════════
@@ -469,6 +501,56 @@ function setLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
 }
 setLang('en');
+
+// ── Film still crossfade ───────────────────────────────────
+(function() {
+  const imgA = document.getElementById('films-img-a');
+  const imgB = document.getElementById('films-img-b');
+  if (!imgA || !imgB) return;
+
+  let slot = 'a';       // which img element is currently showing
+  let cycleTimer = null;
+
+  function swap(src) {
+    if (slot === 'a') {
+      imgB.src = src;
+      imgB.classList.add('active');
+      imgA.classList.remove('active');
+      slot = 'b';
+    } else {
+      imgA.src = src;
+      imgA.classList.add('active');
+      imgB.classList.remove('active');
+      slot = 'a';
+    }
+  }
+
+  function startCycle(imgs) {
+    // Pre-load both images; show first immediately
+    imgs.forEach(src => { const i = new Image(); i.src = src; });
+    let idx = 0;
+    swap(imgs[0]);
+    if (imgs.length > 1) {
+      cycleTimer = setInterval(() => {
+        idx = (idx + 1) % imgs.length;
+        swap(imgs[idx]);
+      }, 3200);
+    }
+  }
+
+  function stopCycle() {
+    clearInterval(cycleTimer);
+    cycleTimer = null;
+    imgA.classList.remove('active');
+    imgB.classList.remove('active');
+  }
+
+  document.querySelectorAll('.film-row[data-imgs]').forEach(row => {
+    const imgs = row.dataset.imgs.split(',').map(s => s.trim());
+    row.addEventListener('mouseenter', () => startCycle(imgs));
+    row.addEventListener('mouseleave', stopCycle);
+  });
+})();
 </script>
 
 </body>
