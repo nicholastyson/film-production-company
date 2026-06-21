@@ -95,6 +95,15 @@
     html[data-theme="light"] .film-link { border-color: rgba(0,0,0,0.3); }
     html[data-theme="light"] .film-link:hover { border-color: var(--cream); }
     body, nav, .film-title, .film-desc p, .lang-btn, .nav-links a { transition-property: color, background-color, border-color; transition-duration: 0.45s; transition-timing-function: ease; }
+
+    /* Crew hover list */
+    .crew-row { display: grid; grid-template-columns: 1fr auto; gap: 0 clamp(12px, 2.5vw, 32px); align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--rule); }
+    .crew-row:first-child { border-top: 1px solid var(--rule); }
+    .crew-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .crew-name { font-size: 11px; color: var(--muted); line-height: 1.6; }
+    .crew-bio { font-size: 10px; color: var(--muted2); line-height: 1.6; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease, margin-top 0.3s ease; }
+    .crew-row:hover .crew-bio { max-height: 200px; opacity: 1; margin-top: 3px; }
+    .crew-role { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; align-self: start; padding-top: 2px; }
   </style>
 </head>
 <body>
@@ -146,7 +155,48 @@
     <div class="film-section">
       <div class="film-section-title en">Creative Team</div>
       <div class="film-section-title fr">Équipe créative</div>
-      <p>Jonah Wheeler — [Role]</p>
+      <div class="crew-list">
+
+        <div class="crew-row">
+          <div class="crew-main">
+            <span class="crew-name">Carson Parish</span>
+            <span class="crew-bio en">Arts administrator, educator, and filmmaker based in New York. Uses 16mm film to tell stories about queer history, kink communities, and the AIDS epidemic. Films shown at Newfest, Ann Arbor Film Fest, Xposed Queer Film Fest (Berlin), and Anthology Film Archives. Fellow, 2024 EFA Project Space SHIFT Residency. NYFA and Puffin Foundation grants. Produces film exhibitions for MoMA; teaches at SVA.</span>
+          </div>
+          <span class="crew-role en">Director</span><span class="crew-role fr">Réalisateur</span>
+        </div>
+
+        <div class="crew-row">
+          <div class="crew-main">
+            <span class="crew-name">Dale Peck</span>
+            <span class="crew-bio en">Author, critic, and journalist based in New York. Books include Hatchet Jobs, The Law of Enclosures, Drift House, and the Lambda Literary Award-winning novel Sprout. Writes for The New Republic; teaches at the New School. Guggenheim Fellow, 1994.</span>
+          </div>
+          <span class="crew-role en">Writer</span><span class="crew-role fr">Scénariste</span>
+        </div>
+
+        <div class="crew-row">
+          <div class="crew-main">
+            <span class="crew-name">Jonah Wheeler</span>
+            <span class="crew-bio en">Theater orchestrator, music director, and adult performer based in New York. Previously musical director for Sweeney Todd. His cabaret show Bleak! has toured nationally for three years. Over a million followers across X, Instagram, and TikTok.</span>
+          </div>
+          <span class="crew-role en">Subject</span><span class="crew-role fr">Sujet</span>
+        </div>
+
+        <div class="crew-row">
+          <div class="crew-main">
+            <span class="crew-name">Derek Howard</span>
+            <span class="crew-bio en">Director of photography, director, and producer. Shot The Tuba Thieves, Bitterbrush, and the Oscar-nominated The ABCs of Book Banning. Longtime collaborator of director Victor Kossakovsky. Based between New York, Berlin, and Tbilisi.</span>
+          </div>
+          <span class="crew-role en">Cinematographer</span><span class="crew-role fr">Chef opérateur</span>
+        </div>
+
+        <div class="crew-row">
+          <div class="crew-main">
+            <span class="crew-name">Nick Tyson</span>
+          </div>
+          <span class="crew-role en">Producer</span><span class="crew-role fr">Producteur</span>
+        </div>
+
+      </div>
     </div>
 
   </div>
